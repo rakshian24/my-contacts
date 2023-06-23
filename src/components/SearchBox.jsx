@@ -7,6 +7,10 @@ const SearchBoxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 0.2fr;
   grid-gap: 38px;
+
+  @media screen and (min-device-width: 768px) { 
+    grid-template-columns: 0.4fr 0fr;
+  }
 `;
 
 const StyledInput = styled.input`
