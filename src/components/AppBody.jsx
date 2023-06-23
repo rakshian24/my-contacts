@@ -10,6 +10,22 @@ const AppBodyContainer = styled.div`
   grid-gap: 20px;
   width: 100%;
 
+
+  //Styles for tablet device and small screen laptop
+  @media only screen and (min-width: 768px) and (max-width: 1024px) { 
+    grid-template-columns: 1fr 1fr;
+  }
+
+  //Styles for small screen laptops to big screen laptops
+  @media only screen and (min-width: 1025px) and (max-width: 1800px) { 
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  //Styles for bigger monitor screens
+  @media screen and (min-width: 1801px) { 
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
 `;
 
 const AppBody = () => {
