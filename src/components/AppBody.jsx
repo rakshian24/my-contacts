@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
 import Card from './Card';
+import LoadingSpinner from '../components/icons/LoadingSpinner';
 import { useWindowSize } from '../hooks/useWindowResize';
-import LoadingSpinner from './icons/LoadingSpinner';
 
 const AppBodyContainer = styled.div`
   margin-bottom: 1em;
-  padding: 2em 0;
+  padding: 1.5em 0;
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 20px;
   width: 100%;
 
+  @media screen and (min-width: 768px){
+    padding: 2em 0;
+  }
 
   //Styles for tablet device and small screen laptop
   @media only screen and (min-width: 768px) and (max-width: 1024px) { 
@@ -33,27 +36,18 @@ const LoadingSpinnerContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 1em;
+  padding: 3em 0;
   width: 100%;
 `;
 
-const AppBody = () => {
-  const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+const NoUserFoundDiv = styled.div`
+  font-size: 1.5em;
+`;
+
+const AppBody = ({users, isLoading}) => {
   const [screenWidth] = useWindowSize();
 
-  useEffect(() => {
-    if (users.length === 0) {
-      setIsLoading(true);
-      fetch('https://jsonplaceholder.typicode.com/users').then(response => response.json())
-        .then(data => {
-          setUsers(data);
-          setIsLoading(false);
-        });
-    }
-  }, []);
-
-  const getLoadingSpinnerWidth = (screenSize) => {
+   const getLoadingSpinnerWidth = (screenSize) => {
     if (screenSize > 500 && screenSize < 1200) {
       return '135px'
     } else if (screenSize > 1200) {
@@ -73,9 +67,11 @@ const AppBody = () => {
 
   return (
     <AppBodyContainer>
-      {users.length > 0 && users.map((user) => {
+      {users.length > 0 ? users.map((user) => {
         return <Card key={user.id} user={user} />
-      })}
+      }) : (
+        <NoUserFoundDiv>No contacts found.</NoUserFoundDiv>
+      )}
     </AppBodyContainer>
   )
 }
