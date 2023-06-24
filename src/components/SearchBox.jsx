@@ -2,6 +2,9 @@ import React from 'react';
 import { styled } from 'styled-components';
 import { useWindowSize } from '../hooks/useWindowResize';
 import SearchIcon from './icons/SearchIcon';
+import { colors } from '../constants/colors';
+
+const { primaryBlue, primaryBlueLight, lightBlueGrey } = colors;
 
 const SearchBoxContainer = styled.div`
   display: grid;
@@ -17,7 +20,7 @@ const StyledInput = styled.input`
   padding: 0.5em;
   font-size: 1.25em;
   outline: none;
-  border: 1px solid #0077c5;
+  border: 1px solid ${primaryBlue};
   border-radius: 4px;
   width: 100%;
 `;
@@ -26,19 +29,23 @@ const Button = styled.button`
   padding: 0.45em;
   font-size: 1.25em;
   outline: none;
-  border: 1px solid #0077c5;
+  border: 1px solid ${primaryBlue};
   border-radius: 4px;
-  background-color: #0076c5cd;
+  background-color: ${primaryBlueLight};
   color: #ffffff;
   cursor: pointer;
   font-weight: 600;
+
+  &:hover{
+    background-color: ${primaryBlue};
+  }
 `;
 
 const SearchIconContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #eee;
+  background: ${lightBlueGrey};
   border-radius: 8px;
 `;
 
@@ -53,7 +60,7 @@ const SearchBox = () => {
       {screenWidth > 500 ? <div>
         <Button id="search-btn">Search</Button>
       </div> : <SearchIconContainer>
-        <SearchIcon fill='#0077c5' stroke='#0077c5' />
+        <SearchIcon fill={primaryBlue} stroke={primaryBlue} />
       </SearchIconContainer>}
 
     </SearchBoxContainer>

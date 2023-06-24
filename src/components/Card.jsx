@@ -1,5 +1,9 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import { colors } from '../constants/colors';
+import { getRandomNumber } from '../utils';
+
+const {lightBlueGrey, primaryBlue} = colors;
 
 const CardContainer = styled.div`
   margin-bottom: 0.5em;
@@ -21,7 +25,7 @@ const CardContainer = styled.div`
   
 `;
 const Avatar = styled.div`
-  background-color: #0077c5;
+  background-color: ${lightBlueGrey};
   width: 90px;
   height: 90px;
   border-radius: 45px;
@@ -29,7 +33,7 @@ const Avatar = styled.div`
   img{
     width: 100%;
     height: 100%;
-    border: 2px solid #0077c5;
+    border: 2px solid ${primaryBlue};
     border-radius: 45px;
     object-fit: contain;
   }
@@ -91,13 +95,14 @@ const Card = ({ user }) => {
     emailEle.style.transform = 'translate(0px, 0px)';
     phoneNumberDiv.style.display = 'none';
     cardElement.style.marginTop = '0';
-
   }
+  const randomPicId = getRandomNumber(0, 70);
+
   return (
     <CardContainer onMouseOver={(e) => handleMouseOver(e, user)}
       onMouseOut={handleMouseOut}>
       <Avatar>
-        <img src={`https://xsgames.co/randomusers/assets/avatars/male/${user.id}.jpg`} />
+        <img src={`https://xsgames.co/randomusers/assets/avatars/male/${randomPicId}.jpg`} />
       </Avatar>
       <UserName>{user.name}</UserName>
       <Email>{user.email}</Email>
