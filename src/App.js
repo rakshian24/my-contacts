@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import Header from './components/Header';
 import AppBody from './components/AppBody';
+import SearchBox from './components/SearchBox';
+import { alphabeticRegex } from './utils';
 
 const AppWrapper = styled.div`
   height: 100vh;
@@ -23,11 +25,31 @@ const AppContainer = styled.div`
 `;
 
 const App = () => {
+  const [users, setUsers] = useState([]);
+  const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`https://jsonplaceholder.typicode.com/users?q=${query}`).then(response => response.json())
+      .then(data => {
+        setUsers(data);
+        setIsLoading(false);
+      });
+  }, [query]);
+
+  const handleQueryChange = (e) => {
+    const inputValue = e.target.value;
+    if (inputValue.match(alphabeticRegex)) {
+      setQuery(inputValue)
+    }
+  }
+
   return (
     <AppWrapper>
       <AppContainer>
-        <Header />
-        <AppBody />
+        <SearchBox query={query} handleQueryChange={handleQueryChange} />
+        <AppBody users={users} isLoading={isLoading} />
       </AppContainer>
     </AppWrapper>
   );
